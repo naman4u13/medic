@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':sun.misc.BASE64Decoder', ':httpclient-4.5.1', ':httpcore-4.4.3', ':gson-2.3.1', ':jackson-annotations-2.7.1', ':com.fasterxml.jackson.databind', ':jackson-core-2.7.1'

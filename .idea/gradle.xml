@@ -9,6 +9,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/com.fasterxml.jackson.databind" />
+            <option value="$PROJECT_DIR$/gson-2.3.1" />
+            <option value="$PROJECT_DIR$/httpclient-4.5.1" />
+            <option value="$PROJECT_DIR$/httpcore-4.4.3" />
+            <option value="$PROJECT_DIR$/jackson-annotations-2.7.1" />
+            <option value="$PROJECT_DIR$/jackson-core-2.7.1" />
+            <option value="$PROJECT_DIR$/sun.misc.BASE64Decoder" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
