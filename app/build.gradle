@@ -12,6 +12,7 @@ android {
         exclude 'META-INF/ASL2.0'
     }
 
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.hp.medic"
@@ -44,4 +45,5 @@ dependencies {
     implementation project(':jackson-annotations-2.7.1')
     implementation project(':com.fasterxml.jackson.databind')
     implementation project(':jackson-core-2.7.1')
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
 }

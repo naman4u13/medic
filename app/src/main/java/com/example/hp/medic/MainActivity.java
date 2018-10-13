@@ -2,6 +2,7 @@ package com.example.hp.medic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ListView list;
     AccessToken key;
     ArrayAdapter<String> itemsAdapter;
+    String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +41,26 @@ public class MainActivity extends AppCompatActivity {
         symptom = findViewById(R.id.symptom);
         list = findViewById(R.id.list);
         Dlist = new ArrayList<String>();
+        keyword="";
+        search.setEnabled(false);
+        key = new AccessToken();
+        key.Token = "naman";
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Dlist);
-        try {
-            key = new Tokenkey().LoadToken("naman4u13@gmail.com","d4K9JrGn8i6X7ZsHc","https://sandbox-authservice.priaid.ch/login ");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new GetToken(key, search).execute();
+
         search.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                Dlist.clear();
-                String keyword = String.valueOf(symptom.getText());
-                SSymptom(keyword);
-                list.setAdapter(itemsAdapter);
+
+                if (!(String.valueOf(symptom.getText()).replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))))
+                {
+                    Log.e("onClick: ","yes" );
+                    Dlist.clear();
+                    itemsAdapter.clear();
+                    keyword = String.valueOf(symptom.getText());
+                    SSymptom(keyword);
+                }
             }
         });
 
@@ -60,15 +69,18 @@ public class MainActivity extends AppCompatActivity {
     void SSymptom(final String keyword) {
 
 
-        String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token="+key+"&format=json&language=en-gb";
+        Log.e("SSymptom: ", key.Token);
+
+
+        String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, symurl, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray array) {
-                        String diagurl="";
-                        String name="";
+                        String diagurl = "";
+                        String name = "";
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject currObject = null;
                             try {
@@ -79,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))) {
                                 try {
-                                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token="+key+"&format=json&language=en-gb";
+                                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
                                     SDiagnosis(diagurl);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -87,8 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             }
                         }
-                        if(diagurl.isEmpty())
-                        {
+                        if (diagurl.isEmpty()) {
                             symptom.setText("Wrong Input ! Try Again");
                         }
 
@@ -126,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
-
+                        list.setAdapter(itemsAdapter);
                     }
                 }, new Response.ErrorListener() {
 
