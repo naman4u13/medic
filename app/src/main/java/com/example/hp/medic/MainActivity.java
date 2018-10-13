@@ -1,13 +1,16 @@
 package com.example.hp.medic;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,11 +44,20 @@ public class MainActivity extends AppCompatActivity {
         symptom = findViewById(R.id.symptom);
         list = findViewById(R.id.list);
         Dlist = new ArrayList<String>();
-        keyword="";
+        keyword = "";
         search.setEnabled(false);
         key = new AccessToken();
-        key.Token = "naman";
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Dlist);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position,
+                                    long id) {
+                TextView txt = (TextView)v.findViewById(android.R.id.text1);
+                Intent intent = new Intent(MainActivity.this, Treatment.class);
+                intent.putExtra("key",txt.getText());
+                startActivity(intent);
+            }
+        });
         new GetToken(key, search).execute();
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -53,9 +65,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (!(String.valueOf(symptom.getText()).replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))))
-                {
-                    Log.e("onClick: ","yes" );
+                if (!(String.valueOf(symptom.getText()).replace(" ", "").equalsIgnoreCase(keyword.replace(" ", "")))) {
+                    Log.e("onClick: ", "yes");
                     Dlist.clear();
                     itemsAdapter.clear();
                     keyword = String.valueOf(symptom.getText());
@@ -68,10 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     void SSymptom(final String keyword) {
 
-
         Log.e("SSymptom: ", key.Token);
-
-
         String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
