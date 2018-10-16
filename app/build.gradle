@@ -46,4 +46,5 @@ dependencies {
     implementation project(':com.fasterxml.jackson.databind')
     implementation project(':jackson-core-2.7.1')
     compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
+    compile 'org.jsoup:jsoup:1.11.2'
 }

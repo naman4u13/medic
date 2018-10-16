@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button search;
     EditText symptom;
-    ArrayList<String> Dlist;
+    ArrayList<String> Issue_Names;
+    ArrayList<String> Issue_ID;
     ListView list;
     AccessToken key;
     ArrayAdapter<String> itemsAdapter;
@@ -40,25 +41,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        key = new AccessToken();
         search = findViewById(R.id.search);
+        new GetToken(key, search).execute();
         symptom = findViewById(R.id.symptom);
         list = findViewById(R.id.list);
-        Dlist = new ArrayList<String>();
+        Issue_Names = new ArrayList<String>();
+        Issue_ID = new ArrayList<String>();
         keyword = "";
         search.setEnabled(false);
-        key = new AccessToken();
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Dlist);
+
+        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,Issue_Names);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position,
                                     long id) {
                 TextView txt = (TextView)v.findViewById(android.R.id.text1);
                 Intent intent = new Intent(MainActivity.this, Treatment.class);
-                intent.putExtra("key",txt.getText());
-                startActivity(intent);
+                intent.putExtra("Name",txt.getText());
+                String iid = Issue_ID.get(position);
+                intent.putExtra("ID",iid);
+                String issueurl = "https://sandbox-healthservice.priaid.ch/issues/"+iid+"/info?token="+key.Token+"&format=json&language=en-gb";
+                SIssue(issueurl,intent);
             }
         });
-        new GetToken(key, search).execute();
+
 
         search.setOnClickListener(new View.OnClickListener() {
 
@@ -67,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!(String.valueOf(symptom.getText()).replace(" ", "").equalsIgnoreCase(keyword.replace(" ", "")))) {
                     Log.e("onClick: ", "yes");
-                    Dlist.clear();
+                    Issue_Names.clear();
+                    Issue_ID.clear();
                     itemsAdapter.clear();
                     keyword = String.valueOf(symptom.getText());
                     SSymptom(keyword);
@@ -110,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
                         if (diagurl.isEmpty()) {
                             symptom.setText("Wrong Input ! Try Again");
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -138,13 +144,13 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject currObject = null;
                             try {
                                 currObject = array.getJSONObject(i).getJSONObject("Issue");
-                                Dlist.add(currObject.getString("Name"));
+                                Issue_Names.add(currObject.getString("Name"));
+                                Issue_ID.add(currObject.getString("ID"));
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
-
                         list.setAdapter(itemsAdapter);
                     }
                 }, new Response.ErrorListener() {
@@ -155,10 +161,34 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
-
         queue.add(jsonArrayRequest);
 
 
     }
+
+    void SIssue(String issueurl,final Intent intent)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, issueurl, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject object) {
+                            try {
+                                intent.putExtra("ProfName",object.getString("ProfName"));
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        queue.add(jsonObjectRequest);
+
+    }
+
 }
