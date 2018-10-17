@@ -114,7 +114,7 @@ For installing package(s):
    ```
    
    
-<img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(6).png" alt="image" height="200px" width="300px">
+> <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(6).png" alt="image" height="200px" width="300px">
  
  
  ### Use of Firebase Relatime Database
