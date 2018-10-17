@@ -60,10 +60,10 @@ public class Tokenkey {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Authorization", "Bearer " + username + ":" + computedHashString);
 
-            Log.e("inside token",httpPost.toString());
+
 
         try {
-            Log.e("inside try",httpPost.toString());
+
             CloseableHttpResponse response = httpclient.execute(httpPost);
 
             ObjectMapper objectMapper = new ObjectMapper();

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!(String.valueOf(symptom.getText()).replace(" ", "").equalsIgnoreCase(keyword.replace(" ", "")))) {
-                    Log.e("onClick: ", "yes");
+
                     Issue_Names.clear();
                     Issue_ID.clear();
                     itemsAdapter.clear();
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     void SSymptom(final String keyword) {
 
-        Log.e("SSymptom: ", key.Token);
+
         String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
