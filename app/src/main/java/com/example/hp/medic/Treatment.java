@@ -29,19 +29,40 @@ public class Treatment extends AppCompatActivity {
         Log.e("TreatonCreate: ", issue.Name+" "+issue.ID+" "+issue.ProfName );
         treatment = findViewById(R.id.treatment);
         treatment.setMovementMethod(new ScrollingMovementMethod());
-        new treattask().execute(issue.Name);
+        new treattask().execute(issue);
     }
-    private class treattask extends AsyncTask<String, Void, String> {
+    private class treattask extends AsyncTask<Issue, Void, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Issue... params) {
             final StringBuilder builder = new StringBuilder();
             builder.append("\n");
 
             try {
-                Document doc = Jsoup.connect("https://www.google.com/search?q=treatment for "+params[0]).get();
-
+                Document doc = Jsoup.connect("https://www.google.com/search?q=treatment for "+params[0].Name).get();
                 Elements treattab = doc.select("div.kno-himx");
+                if(treattab.isEmpty())
+                {
+                    doc = Jsoup.connect("https://www.google.com/search?q=treatment for "+params[0].ProfName).get();
+                    treattab = doc.select("div.kno-himx");
+                    if(treattab.isEmpty())
+                    {
+                        doc = Jsoup.connect("https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id="+params[0].ID).get();
+                        treattab = doc.getElementsByTag("p");
+
+                        for (Element element : treattab) {
+
+                            if(element.previousElementSibling().text().equals("Consequences + Treatment"))
+                            {
+                                builder.append("\n"+element.text() +"\n");
+                                break;
+                            }
+                        }
+                        return builder.toString();
+
+
+                    }
+                }
                 Document ans = Jsoup.parse(treattab.outerHtml());
                 Elements treatoptions = ans.select("div.hXYDxb");
                 Elements subtype = ans.select("a.HZnEfd");
