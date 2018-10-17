@@ -190,7 +190,7 @@ For installing package(s):
 
 if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
                 try {
-                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" +              currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
+                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" +currObject.getString("ID") +"]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
                     SDiagnosis(diagurl);
 
 
@@ -201,8 +201,7 @@ if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.to
 ```
 
 
-JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-(Request.Method.GET, diagurl, null, new Response.Listener<JSONArray>() {
+JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, diagurl, null, new Response.Listener<JSONArray>() {
 
     @Override
     public void onResponse(JSONArray array) {
