@@ -51,7 +51,6 @@ public class Treatment extends AppCompatActivity {
         issue.Name = intent.getStringExtra("Name");
         issue.ID = intent.getStringExtra("ID");
         issue.ProfName = intent.getStringExtra("ProfName");
-        Log.e("TreatonCreate: ", issue.Name + " " + issue.ID + " " + issue.ProfName);
         treatment = findViewById(R.id.treatment);
         treatment.setMovementMethod(new ScrollingMovementMethod());
         addlistener(issue);
@@ -128,7 +127,6 @@ public class Treatment extends AppCompatActivity {
                     }
                     treatObj.option.add(treatOption);
                 }
-                Log.e("doInBackground: ", treatObj.toString());
                 return treatObj;
 
 
@@ -139,7 +137,6 @@ public class Treatment extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(TreatObj result) {
-            Log.e("onPostExecute", "shit");
             myRef.child(result.ID).setValue(result);
 
         }
@@ -147,19 +144,14 @@ public class Treatment extends AppCompatActivity {
 
     private void addlistener(final Issue issue) {
 
-        Log.e("addlistener", "inside null");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("onDataChange ", "Start");
                 if (dataSnapshot.hasChild(issue.ID)) {
-                    Log.e("onDataChange ", "inside if");
                     TreatObj treatObj = new TreatObj();
                     treatObj = dataSnapshot.child(issue.ID).getValue(TreatObj.class);
-                    Log.e("onChild", "inside");
                     setView(treatObj);
                 } else {
-                    Log.e("onDataChange ", "inside else");
                     new treattask().execute(issue);
                 }
 

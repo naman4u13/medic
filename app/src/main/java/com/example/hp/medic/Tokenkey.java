@@ -71,7 +71,6 @@ public class Tokenkey {
                 RetrieveException(response, objectMapper);
             }
             AccessToken accessToken = objectMapper.readValue(response.getEntity().getContent(), AccessToken.class);
-            Log.e("inside token","hello");
             return accessToken;
         }
         catch (ClientProtocolException e) {
