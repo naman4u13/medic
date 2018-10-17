@@ -101,7 +101,9 @@ For installing package(s):
   ```
   <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(3).png" alt="image" height="200px" width="300px">
   otherwise for Glossary List, based on ID of Treatment a simple query ```"https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id=" + params[0].ID``` displays a web page from which information under title "Consequences and Treatment" is scraped
-  ```
+ 
+```
+ 
   treattab = doc.getElementsByTag("p");
 
                         for (Element element : treattab) {
@@ -111,7 +113,9 @@ For installing package(s):
                                 break;
                             }
                         }
-   ```
+   
+   
+```
    
    
 
