@@ -137,7 +137,7 @@ public class Treatment extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(TreatObj result) {
-            Log.e("onPostExecute","shit" );
+            Log.e("onPostExecute", "shit");
             myRef.child(result.ID).setValue(result);
 
         }
@@ -145,35 +145,31 @@ public class Treatment extends AppCompatActivity {
 
     private void addlistener(final Issue issue) {
 
-            Log.e("addlistener", "inside null");
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.e("onDataChange ","Start" );
-                    if (dataSnapshot.hasChild(issue.ID))
-                    {
-                        Log.e("onDataChange ","inside if" );
-                        TreatObj treatObj = new TreatObj();
-                        treatObj = dataSnapshot.child(issue.ID).getValue(TreatObj.class);
-                        Log.e("onChild", "inside");
-                        setView(treatObj);
-                    }
-                    else {
-                        Log.e("onDataChange ","inside else" );
-                        new treattask().execute(issue);
-                    }
-
+        Log.e("addlistener", "inside null");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("onDataChange ", "Start");
+                if (dataSnapshot.hasChild(issue.ID)) {
+                    Log.e("onDataChange ", "inside if");
+                    TreatObj treatObj = new TreatObj();
+                    treatObj = dataSnapshot.child(issue.ID).getValue(TreatObj.class);
+                    Log.e("onChild", "inside");
+                    setView(treatObj);
+                } else {
+                    Log.e("onDataChange ", "inside else");
+                    new treattask().execute(issue);
                 }
 
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
 
 
-                }
-            });
-
-
+            }
+        });
 
 
     }
@@ -191,24 +187,24 @@ public class Treatment extends AppCompatActivity {
         builder.append(Info);
         builder.append("\n\n");
 
-        if(!(treatObj.option==null||treatObj.option.isEmpty()))
-        {
-        for (TreatOption treatOption : treatObj.option) {
-            SpannableString optionName = (new SpannableString(treatOption.OptionTitle));
-            optionName.setSpan(new RelativeSizeSpan(2f), 0, optionName.length(), 0);
-            builder.append(optionName);
-            builder.append("\n\n");
-            for (SubOption subOption : treatOption.suboption) {
-                SpannableString subType = (new SpannableString(subOption.subtype));
-                subType.setSpan(new RelativeSizeSpan(1.5f), 0, subType.length(), 0);
-                builder.append(subType);
+        if (!(treatObj.option == null || treatObj.option.isEmpty())) {
+            for (TreatOption treatOption : treatObj.option) {
+                SpannableString optionName = (new SpannableString(treatOption.OptionTitle));
+                optionName.setSpan(new RelativeSizeSpan(2f), 0, optionName.length(), 0);
+                builder.append(optionName);
                 builder.append("\n\n");
-                SpannableString subDetail = (new SpannableString(subOption.subdetail));
-                subDetail.setSpan(new RelativeSizeSpan(1f), 0, subDetail.length(), 0);
-                builder.append(subDetail);
-                builder.append("\n\n");
+                for (SubOption subOption : treatOption.suboption) {
+                    SpannableString subType = (new SpannableString(subOption.subtype));
+                    subType.setSpan(new RelativeSizeSpan(1.5f), 0, subType.length(), 0);
+                    builder.append(subType);
+                    builder.append("\n\n");
+                    SpannableString subDetail = (new SpannableString(subOption.subdetail));
+                    subDetail.setSpan(new RelativeSizeSpan(1f), 0, subDetail.length(), 0);
+                    builder.append(subDetail);
+                    builder.append("\n\n");
+                }
             }
-        }}
+        }
         treatment.setText(builder);
 
     }
