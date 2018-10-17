@@ -185,25 +185,35 @@ For installing package(s):
   
   ## API 2
   ### Search and Display Diagnosis for give Symptom 
-        ```
-        if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
-                                try {
-                                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" +              currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
-                                    SDiagnosis(diagurl);
-        ```
-        
-        ```
-         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, diagurl, null, new Response.Listener<JSONArray>() {
+```
 
-                    @Override
-                    public void onResponse(JSONArray array) {
 
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject currObject = null;
-                            try {
-                                currObject = array.getJSONObject(i).getJSONObject("Issue");
-          ```
+if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
+                try {
+                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" +              currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
+                    SDiagnosis(diagurl);
+
+
+```
+
+
+
+```
+
+
+JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+(Request.Method.GET, diagurl, null, new Response.Listener<JSONArray>() {
+
+    @Override
+    public void onResponse(JSONArray array) {
+
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject currObject = null;
+            try {
+                currObject = array.getJSONObject(i).getJSONObject("Issue");
+
+
+```
   ### Text Search and Filter
       app.get('/search/:page',function(req,res){
     var perPage = 2
