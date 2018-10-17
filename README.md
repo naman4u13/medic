@@ -4,14 +4,14 @@
 2. [Getting Started](#getting-started)
    * [Prerequisites](#prerequisites)
    * [Installation](#installation-setting-up-project)
-3. [API 1 and API 2](#API 1 and API 2)
-    * [Search and Fetch Symptom](#Search and Fetch Symptom) 
-    * [Fetching Auth Token](#Fetching Auth Token)
-    * [ Working with Volley Library](#Working with Volley Library)
-4. [ API 3](# API 3)
-    * [Web Scraping for a given Diagnosis](#Web Scraping for a given Diagnosis)
-    * [Use of Firebase Relatime Database](#Use of Firebase Relatime Database)
-5. [API 5](#API 5)
+3. [API 1 and API 2](#API-1-and-API-2)
+    * [Search and Fetch Symptom](#Search-and-Fetch-Symptom) 
+    * [Fetching Auth Token](#Fetching-Auth-Token)
+    * [ Working with Volley Library](#Working-with-Volley-Library)
+4. [ API 3](#API-3)
+    * [Web Scraping for a given Diagnosis](#Web-Scraping-for-a-given-Diagnosis)
+    * [Use of Firebase Relatime Database](#Use-of-Firebase-Relatime-Database)
+5. [API 5](#API-5)
    
 
 ## Description
