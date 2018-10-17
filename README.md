@@ -20,6 +20,8 @@ to scrape information regarding their treatments and storing it in Firebase Real
 1. API 1 to To fetch the symptoms by using Apimedic’s APIs. 
 2. API 2 to list down the medical conditions for a given symptom.
 3. API 3 to fetch/display treatment options for given medical condition and store it in a database.
+4. API 5 take a text like “I’m having a back pain”, and extracts symptoms and based on those symptoms returns the medical conditions.
+
 
  ## Getting Started
 > Following instructions will get you a copy of the project up and running on your local machine
