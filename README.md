@@ -68,31 +68,31 @@ For installing package(s):
 ## API 1 and API 2
   ### Search and Fetch Symptom
   
-  On Searching a Symptom Name , URL for the JSON query to fetch all symptoms is created  ` "https://sandbox-healthservice.priaid.ch/symptoms?token="  key.Token +"&format=json&language=en-gb"` ,if apimedic database contains that particular symptom name a JSON query URL for its possible diagnosis is formed `"https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb"` and executed,
-  after fetching JSON objects of the diagnosis , its information is displayed down in a list.
+  On Searching a Symptom, URL for the JSON query to fetch all symptoms is created  ` "https://sandbox-healthservice.priaid.ch/symptoms?token="  key.Token +"&format=json&language=en-gb"`, if apimedic database contains that particular symptom a query URL for its possible diagnosis is formed `"https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb"` and executed,
+  after fetching JSON objects of the diagnosis, its information is displayed in a list.
   
   
- <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-03-20.png" alt="image" height="300px" width="200px">
+ <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-03-20.png" alt="image" height="300px" width="200px" align="left">
  <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-03-33.png" alt="image" height="300px" width="200px">
 
  ### Fetching Auth Token
- As AuthToken is valid only for a period of time, it needs to be fetched every time on creation of main activity , key = new AccessToken();
- A class named TokenKey has function named LoadToken for the specified purpose
+ As AuthToken is valid only for a period of time, it needs to be fetched every time on creation of main activity, ` key = new AccessToken();`
+ A class named TokenKey has function named LoadToken for the specified purpose.
  
 
  ### Working with Volley Library
- Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available on GitHub.
- For fetching both symptoms and diagnosis , connection to API has been made through volley.
- RequestQueue queue = Volley.newRequestQueue(this);
+ Volley is an HTTP library that makes networking for Android apps easier and faster.  
+ For fetching both symptoms and diagnosis , connection to API is made through volley.  
+ `RequestQueue queue = Volley.newRequestQueue(this);`  
  
   
   ## API 3
-  ### Web Scraping for a given Diagnosis 
-  For a particular Medical Condition, information regarding its available Treatments were scraped from "Knowledge Panel" on https://www.google.com and "Glossary List" on https://legacy.priaid.ch/en-gb using "JSOUP" Library 
+  ### Web Scraping for a given Diagnosis    
+  For a particular Medical Condition, information regarding its available Treatments were scraped from "Knowledge Panel" on `https://www.google.com` and "Glossary List" on `https://legacy.priaid.ch/en-gb` using "JSOUP" Library 
    Document doc = Jsoup.connect(URL).get();
    
    
-   Incase Knowledge Panel is scraped a google query eg. -  "Treatment for Common Cold" gives us a web page on whose right hand side a info box is present on which "TREATMENT" tab is automatically selected , 4 separate List containing HTML elements of same Class Name is maintained after inspecting each info box.
+   Incase of scraping a Knowledge Panel, a google search like "Treatment for Common Cold" gives us a web page which has a info box containing "TREATMENT" tab which is automatically selected, 4 separate List containing HTML elements of same Class Name is maintained after inspecting each info box.
    ```
       Elements treatoptions = ans.select("div.hXYDxb");
       Elements subtype = ans.select("a.HZnEfd");
@@ -126,7 +126,7 @@ For installing package(s):
 
 
 ### Use of Firebase Relatime Database
-  To store already enquired information on Treatments for a Disease, Firebase realtime database is used which is a schemaless database (NoSQL) in which the data is stored in JSON format.Any further query on same diagnosis will fetch data from database instead of scraping it from web
+  To store already fetched information of Treatments for a Disease, Firebase realtime database is used which is a schemaless database (NoSQL) in which the data is stored in JSON format. Any further query on same diagnosis will fetch data from database instead of scraping it from web.
  
  
 <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(4).png" alt="image" height="200px" width="300px">
