@@ -84,7 +84,7 @@ For installing package(s):
   ### Libraries for twitter search or streaming
    [Libraries used for search and streaming](https://www.npmjs.com/package/twitter)
 
- ### Fetch tweets
+ ### Search for a Symptom
       const Twit = require('twitter');
       var T = new Twit(config);
 
@@ -184,33 +184,26 @@ For installing package(s):
   
   
   ## API 2
-  ### Pagination 
-       var perPage = 2
-    var page = req.params.page || 1
-    var noMatch=' ';
-   
-    if(req.query.search){
-      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      db
-      .find({name:regex})
-      .skip((perPage * page) - perPage)
-      .limit(perPage)
-      .exec(function(err, twit) {
-          db.count().exec(function(err, count) {
-              if (err) return next(err)
-              if(count<1){
-                noMatch="Notfound"
-              }
-              res.render('text', {
-                  t: twit,
-                  current: page,
-                  pages: Math.ceil(count / perPage),
-                 noMatch:noMatch
-              })
-          })
+  ### Search and Display Diagnosis for give Symptom 
+        ```
+        if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
+                                try {
+                                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" +              currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
+                                    SDiagnosis(diagurl);
+        ```
         
-      })
-    }
+        ```
+         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, diagurl, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray array) {
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject currObject = null;
+                            try {
+                                currObject = array.getJSONObject(i).getJSONObject("Issue");
+          ```
   ### Text Search and Filter
       app.get('/search/:page',function(req,res){
     var perPage = 2
