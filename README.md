@@ -67,7 +67,7 @@ For installing package(s):
    
 ## API 1
   ### Fetch Symptoms
-       _String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";_
+       **String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";**
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, symurl, null, new Response.Listener<JSONArray>() {
