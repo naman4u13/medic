@@ -3,6 +3,8 @@ package com.example.hp.medic;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         Issue_ID = new ArrayList<String>();
         keyword = "";
         search.setEnabled(false);
-
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,Issue_Names);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position,
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                symptom.setHint("SYMPTOM");
 
                 if (!(String.valueOf(symptom.getText()).replace(" ", "").equalsIgnoreCase(keyword.replace(" ", "")))) {
 
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))) {
+                            if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
                                 try {
                                     diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
                                     SDiagnosis(diagurl);
@@ -116,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         if (diagurl.isEmpty()) {
-                            symptom.setText("Wrong Input ! Try Again");
+
+                            symptom.setText("Wrong Input!");
                         }
                     }
                 }, new Response.ErrorListener() {

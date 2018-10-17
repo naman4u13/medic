@@ -1,6 +1,7 @@
 package com.example.hp.medic;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.widget.TextView;
@@ -179,25 +181,28 @@ public class Treatment extends AppCompatActivity {
         final SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append("\n");
         SpannableString Name = (new SpannableString(treatObj.Name));
-        Name.setSpan(new RelativeSizeSpan(3f), 0, Name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Name.setSpan(new RelativeSizeSpan(2.5f), 0, Name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Name.setSpan(new ForegroundColorSpan(Color.BLACK),0, Name.length(), 0);
         builder.append(Name);
         builder.append("\n\n");
         SpannableString Info = (new SpannableString(treatObj.Info));
-        Info.setSpan(new RelativeSizeSpan(1.5f), 0, Info.length(), 0);
+        Info.setSpan(new RelativeSizeSpan(1.25f), 0, Info.length(), 0);
         builder.append(Info);
-        builder.append("\n\n");
+        builder.append("\n");
 
         if (!(treatObj.option == null || treatObj.option.isEmpty())) {
             for (TreatOption treatOption : treatObj.option) {
                 SpannableString optionName = (new SpannableString(treatOption.OptionTitle));
-                optionName.setSpan(new RelativeSizeSpan(2f), 0, optionName.length(), 0);
+                optionName.setSpan(new RelativeSizeSpan(1.5f), 0, optionName.length(), 0);
+                optionName.setSpan(new ForegroundColorSpan(Color.BLACK),0, optionName.length(), 0);
+                builder.append("\n\n");
                 builder.append(optionName);
                 builder.append("\n\n");
                 for (SubOption subOption : treatOption.suboption) {
                     SpannableString subType = (new SpannableString(subOption.subtype));
-                    subType.setSpan(new RelativeSizeSpan(1.5f), 0, subType.length(), 0);
+                    subType.setSpan(new RelativeSizeSpan(1.25f), 0, subType.length(), 0);
                     builder.append(subType);
-                    builder.append("\n\n");
+                    builder.append("\n");
                     SpannableString subDetail = (new SpannableString(subOption.subdetail));
                     subDetail.setSpan(new RelativeSizeSpan(1f), 0, subDetail.length(), 0);
                     builder.append(subDetail);
