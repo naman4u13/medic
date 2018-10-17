@@ -114,12 +114,20 @@ For installing package(s):
    ```
    
    
-> <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(6).png" alt="image" height="200px" width="300px">
+
+<img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(6).png" alt="image" height="200px" width="300px">
  
- 
- ### Use of Firebase Relatime Database
+
+
+
+
+### Use of Firebase Relatime Database
   To store already enquired information on Treatments for a Disease, Firebase realtime database is used which is a schemaless database (NoSQL) in which the data is stored in JSON format.Any further query on same diagnosis will fetch data from database instead of scraping it from web
- <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(4).png" alt="image" height="200px" width="300px">
  
+ 
+<img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(4).png" alt="image" height="200px" width="300px">
+ 
+
+
 ## API 5
 A simple "String.contains(Substring)" functionality inside "if condition" during fetching/checking for symptoms can take a text like “I’m having a back pain”, and extracts symptoms and based on those symptoms returns the medical conditions. 
