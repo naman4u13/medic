@@ -72,7 +72,7 @@ to scrape information regarding their treatments and storing it in Firebase Real
       Elements counter = ans.select("div.Y6f3fc.HtP7nb");
   ```
   <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(3).png" alt="image" height="200px" width="300px">
-  otherwise for Glossary List, based on ID of Treatment a simple query `"https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id=" + params[0].ID` displays a web page from which information under title "Consequences and Treatment" is scraped
+  otherwise for Glossary List, based on ID of Treatment a simple query `("https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id=" + params[0].ID)` displays a web page from which information under title "Consequences and Treatment" is scraped
  
 ```
  
