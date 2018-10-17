@@ -4,17 +4,15 @@
 2. [Getting Started](#getting-started)
    * [Prerequisites](#prerequisites)
    * [Installation](#installation-setting-up-project)
-3. [API 1](#api-1)
-    * [Trigger search or stream](#trigger-search-or-stream) 
-    * [Libraries for twitter search or streaming](#libraries-for-twitter-search-or-streaming)
-    * [Fetch tweets](#fetch-tweets)
-    * [Database Schema](#database-schema)
-4. [API 2](#api-2)
-    * [Pagination](#pagination)
-    * [Text Search and Filter](#text-search-and-filter)
-    * [Sorting](#sorting) 
-5. [API 3](#api-3)
-    * [save to CSV](#save-to-csv)
+3. [API 1 and API 2](#API 1 and API 2)
+    * [Search and Fetch Symptom](#Search and Fetch Symptom) 
+    * [Fetching Auth Token](#Fetching Auth Token)
+    * [ Working with Volley Library](#Working with Volley Library)
+4. [ API 3](# API 3)
+    * [Web Scraping for a given Diagnosis](#Web Scraping for a given Diagnosis)
+    * [Use of Firebase Relatime Database](#Use of Firebase Relatime Database)
+5. [API 5](#API 5)
+   
 
 ## Description
 Use Apimedic API to search and fetch medical symptom, list down the possible medical conditions/diagnosis, thereafter using web scraping 
