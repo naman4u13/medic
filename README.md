@@ -27,44 +27,16 @@ to scrape information regarding their treatments and storing it in Firebase Real
 > Following instructions will get you a copy of the project up and running on your local machine
 ****
 ### Prerequisites
-  * you need to have nodejs and npm installed on your system . ([get_node](https://nodejs.org/en/download/))
-  * This API make use of **twitter** npm package.
-  ```
-      'twitter' is Twitter API Client for node. Supports both the REST and Streaming API.  
-  ```
-  * Package.json include
-    + mongoose      
-    + ejs-mate
-    + body-parser
-    + mongodb
-    + express
-    + fs
-    + json2csv
+  * You need to have Android Studio installed on your system.[Download Link](https://developer.android.com/studio/)
+  * You need to have an Android Device with Debugger enabled.
   
-     
-For installing package(s):
-   ```javascript
-   npm install --save <package_name> 
-   ```
-> --save install package into local node_module directory.
-
 
  ### Installation (setting up project)
   * Download the zip file and extract it.
-  * Cd to the project folder 'Twit_API-master'.
-  * make sure you have **mongoDB** installed in your local machine ([get mongoDB](https://docs.mongodb.com/manual/installation/))and mongodb server running([mongod](https://docs.mongodb.com/manual/tutorial/manage-mongodb-processes/)) at port 27017(default).
+  * Start Android Studio and open extracted folder/zip file.
+  * Sync the project and then press "run app" on top right screen of Android Studio. 
   
-    
- To run server file(Terminal 1):
-  ```javascript
-   run > node main.js
-   ```
-  
- To run mongodb server(Terminal 2):
-  ```javascript
-   run > mongod
-   ``` 
-   
+ 
 ## API 1 and API 2
   ### Search and Fetch Symptom
   
