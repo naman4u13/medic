@@ -68,14 +68,12 @@ For installing package(s):
 ## API 1 and API 2
   ### Search and Fetch Symptom
   
-  Enter and search a symptom name
-  URL for the JSON query to fetch all symptoms is  = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token +               "&format=json&language=en-gb"
-  if apimedic database contains that particular symptom name a JSON query URL for its possible diagnosis is formed 
-  "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb"
+  On Searching a Symptom Name , URL for the JSON query to fetch all symptoms is created  ` "https://sandbox-healthservice.priaid.ch/symptoms?token="  key.Token +"&format=json&language=en-gb"` ,if apimedic database contains that particular symptom name a JSON query URL for its possible diagnosis is formed `"https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb"` and executed,
   after fetching JSON objects of the diagnosis , its information is displayed down in a list.
   
   
- <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-19-23-10.png" alt="image" height="300px" width="200px">
+ <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-03-20.png" alt="image" height="300px" width="200px">
+ <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-03-33.png" alt="image" height="300px" width="200px">
 
  ### Fetching Auth Token
  As AuthToken is valid only for a period of time, it needs to be fetched every time on creation of main activity , key = new AccessToken();
@@ -92,6 +90,8 @@ For installing package(s):
   ### Web Scraping for a given Diagnosis 
   For a particular Medical Condition, information regarding its available Treatments were scraped from "Knowledge Panel" on https://www.google.com and "Glossary List" on https://legacy.priaid.ch/en-gb using "JSOUP" Library 
    Document doc = Jsoup.connect(URL).get();
+   
+   
    Incase Knowledge Panel is scraped a google query eg. -  "Treatment for Common Cold" gives us a web page on whose right hand side a info box is present on which "TREATMENT" tab is automatically selected , 4 separate List containing HTML elements of same Class Name is maintained after inspecting each info box.
    ```
       Elements treatoptions = ans.select("div.hXYDxb");
@@ -99,6 +99,7 @@ For installing package(s):
       Elements subdetails = ans.select("div.Rs3Epd");
       Elements counter = ans.select("div.Y6f3fc.HtP7nb");
   ```
+  <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(3).png" alt="image" height="200px" width="300px">
   otherwise for Glossary List, based on ID of Treatment a simple query ```"https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id=" + params[0].ID``` displays a web page from which information under title "Consequences and Treatment" is scraped
   ```
   treattab = doc.getElementsByTag("p");
@@ -111,10 +112,11 @@ For installing package(s):
                             }
                         }
    ```
-   
+ <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-03-20.png" alt="image" height="200px" width="300px">" alt="image" height="300px" width="200px">
   ### Use of Firebase Relatime Database
   To store already enquired information on Treatments for a Disease, Firebase realtime database is used which is a schemaless database (NoSQL) in which the data is stored in JSON format.Any further query on same diagnosis will fetch data from database instead of scraping it from web
-  
-
+   <img src=" https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(4).png
+" alt="image" height="200px" width="300px">" alt="image" height="300px" width="200px">
+ 
 ## API 5
 A simple "String.contains(Substring)" functionality inside "if condition" during fetching/checking for symptoms can take a text like “I’m having a back pain”, and extracts symptoms and based on those symptoms returns the medical conditions. 
