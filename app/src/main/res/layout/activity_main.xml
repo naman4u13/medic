@@ -29,6 +29,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/search"
+            android:hint="SEARCH"
+            android:layout_margin="20dp"
             />
     </LinearLayout>
 
