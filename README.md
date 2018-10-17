@@ -65,254 +65,56 @@ For installing package(s):
    run > mongod
    ``` 
    
-## API 1
-  ### Fetch Symptoms  
-    void SSymptom(final String keyword) {
+## API 1 and API 2
+  ### Search and Fetch Symptom
+  
+  Enter and search a symptom name
+  URL for the JSON query to fetch all symptoms is  = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token +               "&format=json&language=en-gb"
+  if apimedic database contains that particular symptom name a JSON query URL for its possible diagnosis is formed 
+  "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb"
+  after fetching JSON objects of the diagnosis , its information is displayed down in a list.
+  
+  
+ <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-19-23-10.png" alt="image" height="300px" width="200px">
 
+ ### Fetching Auth Token
+ As AuthToken is valid only for a period of time, it needs to be fetched every time on creation of main activity , key = new AccessToken();
+ A class named TokenKey has function named LoadToken for the specified purpose
+ 
 
-**        String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";**
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, symurl, null, new Response.Listener<JSONArray>() {
+ ### Working with Volley Library
+ Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available on GitHub.
+ For fetching both symptoms and diagnosis , connection to API has been made through volley.
+ RequestQueue queue = Volley.newRequestQueue(this);
+ 
+  
+  ## API 3
+  ### Web Scraping for a given Diagnosis 
+  For a particular Medical Condition, information regarding its available Treatments were scraped from "Knowledge Panel" on https://www.google.com and "Glossary List" on https://legacy.priaid.ch/en-gb using "JSOUP" Library 
+   Document doc = Jsoup.connect(URL).get();
+   Incase Knowledge Panel is scraped a google query eg. -  "Treatment for Common Cold" gives us a web page on whose right hand side a info box is present on which "TREATMENT" tab is automatically selected , 4 separate List containing HTML elements of same Class Name is maintained after inspecting each info box.
+   ```
+      Elements treatoptions = ans.select("div.hXYDxb");
+      Elements subtype = ans.select("a.HZnEfd");
+      Elements subdetails = ans.select("div.Rs3Epd");
+      Elements counter = ans.select("div.Y6f3fc.HtP7nb");
+  ```
+  otherwise for Glossary List, based on ID of Treatment a simple query ```"https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id=" + params[0].ID``` displays a web page from which information under title "Consequences and Treatment" is scraped
+  ```
+  treattab = doc.getElementsByTag("p");
 
-                    @Override
-                    public void onResponse(JSONArray array) {
-                        String diagurl = "";
-                        String name = "";
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject currObject = null;
-                            try {
-                                currObject = array.getJSONObject(i);
-                                name = currObject.getString("Name");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
-                                try {
-                                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
-                                    SDiagnosis(diagurl);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                        for (Element element : treattab) {
+
+                            if (element.previousElementSibling().text().equals("Consequences + Treatment")) {
+                                treatObj.Info = element.text();
                                 break;
                             }
                         }
-                        if (diagurl.isEmpty()) {
-
-                            symptom.setText("Wrong Input!");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
-                    }
-                });
-
-
-        queue.add(jsonArrayRequest);
-    }
-                  
-
-  ### Libraries for twitter search or streaming
-   [Libraries used for search and streaming](https://www.npmjs.com/package/twitter)
-
- ### Search for a Symptom
-      const Twit = require('twitter');
-      var T = new Twit(config);
-
-      var params = {
-         q: '#nodejs',
-         count: 4,
-         result_type: 'recent',
-         lang: 'en'
-        }
-      T.get('search/tweets', params, function(err, data, response) {//search
-         if(!err){
-            var tweets = data.statuses;
-            for (var i = 0; i < tweets.length; i++) {
-            console.log(tweets[i].text);
-          }
-     
-         } else {
-            console.log(err);
-        }
-      })  
-
-      var stream = T.stream('statuses/filter', { track: '#MeToo',language: 'en' });//stream
-         stream.on('data', function (data) {
-        
-     			   console.log((data));
-               let tw_obj  = {
-                  "id_str":data.id_str,
-                  "created_at":data.created_at,
-                  "name":data.user.name,
-                  "text":data.text,
-                  "retweet_count": data.retweet_count,
-      
-                  }
-               tw = new db(tw_obj);
-               tw.save((err,data)=>{
-               if(err) console.log(err);
-                else {
-                  console.log("data save");
-               }
-            })
- 
- 
- ### Database Schema
-        const mongoose = require('mongoose')
-        const Schema = mongoose.Schema;
-
-      const tweetSchema = new Schema({
-         name:{type:String},
-         id_str: {
-         type: String,
-         unique: true,
-         required: true
-      },
-      status: {
-         type: String,
-      },
-      author: {
-         type: String,
-    
-      },
-      created_at: {
-      type: String,
-      required: true
-      },
-      text:{type:String},
-      retweet_count:{type:Number},
-      favorite_count:{type:Number}
-      })
-      module.exports = mongoose.model('Tweet', tweetSchema)
-      # API 2
-      ## Pagination
-     var perPage = 2
-     var page = req.params.page || 1
-     var noMatch=' ';
+   ```
    
-    if(req.query.search){
-      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      db
-      .find({name:regex})
-      .skip((perPage * page) - perPage)
-      .limit(perPage)
-      .exec(function(err, twit) {
-          db.count().exec(function(err, count) {
-              if (err) return next(err)
-              if(count<1){
-                noMatch="Notfound"
-              }
-              res.render('text', {
-                  t: twit,
-                  current: page,
-                  pages: Math.ceil(count / perPage),
-                 noMatch:noMatch
-              })
-          })
-        
-      })
+  ### Use of Firebase Relatime Database
+  To store already enquired information on Treatments for a Disease, Firebase realtime database is used which is a schemaless database (NoSQL) in which the data is stored in JSON format.Any further query on same diagnosis will fetch data from database instead of scraping it from web
   
-  
-  ## API 2
-  ### Search and Display Diagnosis for give Symptom 
-```
 
-
-if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
-                try {
-                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" +currObject.getString("ID") +"]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
-                    SDiagnosis(diagurl);
-
-
-```
-
-
-
-```
-
-
-JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, diagurl, null, new Response.Listener<JSONArray>() {
-
-    @Override
-    public void onResponse(JSONArray array) {
-
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject currObject = null;
-            try {
-                currObject = array.getJSONObject(i).getJSONObject("Issue");
-
-
-```
-  ### Text Search and Filter
-      app.get('/search/:page',function(req,res){
-    var perPage = 2
-    var page = req.params.page || 1
-    var noMatch=' ';
-   
-    if(req.query.search){
-      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      db
-      .find({name:regex})
-      .skip((perPage * page) - perPage)
-      .limit(perPage)
-      .exec(function(err, twit) {
-          db.count().exec(function(err, count) {
-              if (err) return next(err)
-              if(count<1){
-                noMatch="Notfound"
-              }
-              res.render('text', {
-                  t: twit,
-                  current: page,
-                  pages: Math.ceil(count / perPage),
-                 noMatch:noMatch
-              })
-          })
-        
-      })
-    }
-    else{
-      db
-      .find({})
-      .skip((perPage * page) - perPage)
-      .limit(perPage)
-      .exec(function(err, twit) {
-          db.count().exec(function(err, count) {
-              if (err) return next(err)
-              res.render('text', {
-                  t: twit,
-                  current: page,
-                  pages: Math.ceil(count / perPage),
-                 noMatch:noMatch
-              })
-          })
-        
-      })
-    }
-    
-  });
-  
-  
-  ### Sorting
-      Sorting has done on the basis of date and time
-## API 3
-  ### Save to CSV
-     ### Exporting filtered data to CSV file using packages **json2csv** and **fs**.
-     ` db.find({},function(err,y){
-      if(err) console.log(err);
-      const json2csv = require('json2csv').parse;
-      const fs = require('fs');
-      const fields = ['id_str','created_at', 'name','text'];
-      const csv = json2csv({ data: y, fields: fields });
-     
-       fs.writeFile('file.csv', csv, function(err) {
-       if (err) throw err;
-       console.log('file saved');
-       });
-      res.render('index',{p:y});
-    })`
+## API 5
+A simple "String.contains(Substring)" functionality inside "if condition" during fetching/checking for symptoms can take a text like “I’m having a back pain”, and extracts symptoms and based on those symptoms returns the medical conditions. 
