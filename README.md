@@ -67,19 +67,54 @@ For installing package(s):
    
 ## API 1
   ### Fetch Symptoms  
-```  
-  String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";  
-  
-```       
-```  
+    void SSymptom(final String keyword) {
 
-      for (int i = 0; i < array.length(); i++) {l̥
-        JSONObject currObject = null;
-        try {
-            currObject = array.getJSONObject(i);
-            name = currObject.getString("Name");
-        } 
-```                          
+
+>        String symurl = "https://sandbox-healthservice.priaid.ch/symptoms?token=" + key.Token + "&format=json&language=en-gb";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, symurl, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray array) {
+                        String diagurl = "";
+                        String name = "";
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject currObject = null;
+                            try {
+                                currObject = array.getJSONObject(i);
+                                name = currObject.getString("Name");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            if (name.replace(" ", "").equalsIgnoreCase(keyword.replace(" ", ""))||keyword.toLowerCase().contains(name.toLowerCase())) {
+                                try {
+                                    diagurl = "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[" + currObject.getString("ID") + "]&gender=male&year_of_birth=1997&token=" + key.Token + "&format=json&language=en-gb";
+                                    SDiagnosis(diagurl);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+                        }
+                        if (diagurl.isEmpty()) {
+
+                            symptom.setText("Wrong Input!");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+
+
+        queue.add(jsonArrayRequest);
+    }
+                  
 
   ### Libraries for twitter search or streaming
    [Libraries used for search and streaming](https://www.npmjs.com/package/twitter)
