@@ -72,8 +72,8 @@ to scrape information regarding their treatments and storing it in Firebase Real
       Elements counter = ans.select("div.Y6f3fc.HtP7nb");
   ```
   <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(3).png" alt="image" height="200px" width="300px" align="left">
-   <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-19-23-48.png" alt="image" height="200px" width="300px" align="left">
-    <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-19-25-38.png" alt="image" height="200px" width="300px">
+   <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-19-23-48.png" alt="image" height="300px" width="200px" align="left">
+    <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-19-25-38.png" alt="image" height="300px" width="200px">
   otherwise for Glossary List, based on ID of Treatment a simple query `("https://legacy.priaid.ch/en-gb/glossar-details?t=issue&id=" + params[0].ID)` displays a web page from which information under title "Consequences and Treatment" is scraped
  
 ```
@@ -94,7 +94,7 @@ to scrape information regarding their treatments and storing it in Firebase Real
    
 
 <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot%20(6).png" alt="image" height="200px" width="300px" align="left">
- <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-04-42.png" alt="image" height="200px" width="300px" >
+ <img src="https://github.com/naman4u13/medic/blob/master/Img/Screenshot_2018-10-17-21-04-42.png" alt="image" height="300px" width="200px" >
 
 
 
