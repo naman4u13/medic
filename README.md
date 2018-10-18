@@ -109,3 +109,5 @@ to scrape information regarding their treatments and storing it in Firebase Real
 
 ## API 5
 A simple "String.contains(Substring)" functionality inside "if condition" during fetching/checking for symptoms can take a text like “I’m having a back pain”, and extracts symptoms and based on those symptoms returns the medical conditions. 
+
+<img src="https://github.com/naman4u13/medic/blob/master/Img/back_pain.png" alt="image" height="300px" width="200px">
